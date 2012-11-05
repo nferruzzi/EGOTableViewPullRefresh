@@ -245,6 +245,22 @@
 
 }
 
+- (void)egoRefreshScrollViewDataSourceStartManualLoading:(UIScrollView *)scrollView {
+    [self setState:EGOOPullRefreshLoading];
+    
+    //animating pull down scroll view
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         scrollView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+                         scrollView.contentOffset = CGPointMake(0, -60.0f);
+                     }
+     ];
+    
+    //triggering refreshview regular refresh
+    if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDidTriggerRefresh:)]) {
+        [_delegate egoRefreshTableHeaderDidTriggerRefresh:self];
+    }
+}
 
 #pragma mark -
 #pragma mark Dealloc
